@@ -4,11 +4,13 @@ var app = express();
 
 app.get('/', (req, res) => {
     res.json({
-        Author: ahmad
+        Author: 'ahmad'
     })
 })
 
-app.listen(() => {
-    console.log('app listening on port 3000');
+const Port = 3000;
+
+app.listen(Port, () => {
+    console.log(`app listening on port ${Port}`);
 
 })
