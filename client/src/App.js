@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import axios from 'axios';
 
@@ -12,13 +12,16 @@ function App() {
 
   });
 
+  const [data, setData] = useState([])
+
+  useEffect(() => { grapPharmacies(); }, [])
+
 
   const grapPharmacies = () => {
     console.log('hitted');
 
     axios.get('http://localhost:5000/pharmacies').then((res) => {
-      console.log('here', res.data);
-
+      setData(res.data)
     })
   }
 
@@ -110,31 +113,27 @@ function App() {
       <table className="table table-striped">
         <thead>
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
+            <th scope="col" style={{ width: '10%' }}>#</th>
+            <th scope="col" style={{ width: '25%' }}>Name</th>
+            <th scope="col" style={{ width: '20%' }}>Phone</th>
+            <th scope="col" style={{ width: '20%' }}>Address</th>
+            <th scope="col" style={{ width: '25%' }}>website</th>
+
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr>
+          {data && data.length > 0 && data.map((place, i) => {
+            return (
+              <tr>
+                <th scope="row">{i + 1}</th>
+                <td>{place.name ? place.name : 'N/A'}</td>
+                <td>{place.phone ? place.phone : 'N/A'}</td>
+                <td>{place.address ? place.address : 'N/A'}</td>
+                <td>{place.website ? place.website : 'N/A'}</td>
+              </tr>
+            );
+          })}
+
         </tbody>
       </table>
 
