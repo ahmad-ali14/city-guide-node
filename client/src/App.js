@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import axios from 'axios';
+import ReactLoading from 'react-loading';
+
 
 function App() {
   const [isVisible, setIsVisible] = useState({
@@ -12,17 +14,17 @@ function App() {
 
   });
 
-  const [data, setData] = useState([])
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => { grapPharmacies(); }, [])
 
 
-  const grapPharmacies = () => {
-    console.log('hitted');
-
+  const grapPharmacies = async () => {
+    await setLoading(true);
     axios.get('http://localhost:5000/pharmacies').then((res) => {
       setData(res.data)
-    })
+    }).then(() => setLoading(false))
   }
 
 
@@ -110,32 +112,40 @@ function App() {
 
       <hr className="mb-5" />
 
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col" style={{ width: '10%' }}>#</th>
-            <th scope="col" style={{ width: '25%' }}>Name</th>
-            <th scope="col" style={{ width: '20%' }}>Phone</th>
-            <th scope="col" style={{ width: '20%' }}>Address</th>
-            <th scope="col" style={{ width: '25%' }}>website</th>
-
-          </tr>
-        </thead>
-        <tbody>
-          {data && data.length > 0 && data.map((place, i) => {
-            return (
+      {loading ? (
+        <div className="text-center" style={{ marginLeft: '40%' }} >
+          <ReactLoading type='bars' color='blue' height={'20%'} width={'20%'} />
+        </div>
+      ) : (
+          <table className="table table-striped">
+            <thead>
               <tr>
-                <th scope="row">{i + 1}</th>
-                <td>{place.name ? place.name : 'N/A'}</td>
-                <td>{place.phone ? place.phone : 'N/A'}</td>
-                <td>{place.address ? place.address : 'N/A'}</td>
-                <td>{place.website ? place.website : 'N/A'}</td>
-              </tr>
-            );
-          })}
+                <th scope="col" style={{ width: '10%' }}>#</th>
+                <th scope="col" style={{ width: '25%' }}>Name</th>
+                <th scope="col" style={{ width: '20%' }}>Phone</th>
+                <th scope="col" style={{ width: '20%' }}>Address</th>
+                <th scope="col" style={{ width: '25%' }}>website</th>
 
-        </tbody>
-      </table>
+              </tr>
+            </thead>
+            <tbody>
+              {data && data.length > 0 && data.map((place, i) => {
+                return (
+                  <tr>
+                    <th scope="row">{i + 1}</th>
+                    <td>{place.name ? place.name : 'N/A'}</td>
+                    <td>{place.phone ? place.phone : 'N/A'}</td>
+                    <td>{place.address ? place.address : 'N/A'}</td>
+                    <td>{place.website ? place.website : 'N/A'}</td>
+                  </tr>
+                );
+              })}
+
+            </tbody>
+          </table>
+        )}
+
+
 
 
     </div>
