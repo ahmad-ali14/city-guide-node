@@ -103,11 +103,11 @@ function App() {
         <li className="nav-item">
           <button className={isVisible.pharmacies ? "nav-link active" : "nav-link"} onClick={(e) => { grapPharmacies(); handleTabClick(e) }} value="pharmacies" >Pharmacies</button>
         </li>
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <button className={isVisible.highSchools ? "nav-link active" : "nav-link"} onClick={(e) => { handleTabClick(e) }} value="highSchools" >high schools</button>
-        </li>
+        </li> */}
         <li className="nav-item">
-          <button className={isVisible.colleges ? "nav-link active" : "nav-link"} onClick={(e) => { grapColleges(); handleTabClick(e) }} value="colleges" >colleges</button>
+          <button className={isVisible.colleges ? "nav-link active" : "nav-link"} onClick={(e) => { grapColleges(); handleTabClick(e) }} value="colleges" > schools & colleges</button>
         </li>
         <li className="nav-item">
           <button className={isVisible.hospitals ? "nav-link active" : "nav-link"} onClick={(e) => { handleTabClick(e) }} value="hospitals" >hospitals</button>
@@ -138,12 +138,12 @@ function App() {
             <tbody>
               {data && data.length > 0 && data.map((place, i) => {
                 return (
-                  <tr>
+                  <tr key={i}>
                     <th scope="row">{i + 1}</th>
                     <td>{place.name ? place.name : 'N/A'}</td>
                     <td>{place.phone ? place.phone : 'N/A'}</td>
                     <td>{place.address ? place.address : 'N/A'}</td>
-                    <td>{place.website ? place.website : 'N/A'}</td>
+                    <td>{place.website ? <a href={place.website} target="_blank" >{place.name} link </a> : 'N/A'}</td>
                   </tr>
                 );
               })}
