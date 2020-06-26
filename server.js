@@ -6,11 +6,6 @@ var app = express();
 
 app.use(cors())
 
-app.get('/', (req, res) => {
-    res.json({
-        Author: 'ahmad'
-    })
-})
 
 app.get('/pharmacies', async (req, res) => {
     let scrapPharmacies = require('./src/pharmacies');
@@ -18,6 +13,14 @@ app.get('/pharmacies', async (req, res) => {
     res.json(pharmacies)
 })
 
+
+
+app.get('/colleges', async (req, res) => {
+    let scrapPharmacies = require('./src/pharmacies');
+    let colleges_url = "https://www.yell.com/ucs/UcsSearchAction.do?scrambleSeed=1579292639&selectedClassification=Schools%20and%20Colleges&keywords=colleges&location=Harrow"
+    var colleges = await scrapPharmacies(colleges_url);
+    res.json(colleges)
+})
 const Port = 5000;
 
 app.listen(Port, () => {
