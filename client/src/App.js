@@ -27,6 +27,13 @@ function App() {
     }).then(() => setLoading(false))
   }
 
+  const grapColleges = async () => {
+    await setLoading(true);
+    axios.get('http://localhost:5000/colleges').then((res) => {
+      setData(res.data)
+    }).then(() => setLoading(false))
+  }
+
 
   const handleTabClick = (e) => {
     let updateTab = e.target.value;
@@ -100,7 +107,7 @@ function App() {
           <button className={isVisible.highSchools ? "nav-link active" : "nav-link"} onClick={(e) => { handleTabClick(e) }} value="highSchools" >high schools</button>
         </li>
         <li className="nav-item">
-          <button className={isVisible.colleges ? "nav-link active" : "nav-link"} onClick={(e) => { handleTabClick(e) }} value="colleges" >colleges</button>
+          <button className={isVisible.colleges ? "nav-link active" : "nav-link"} onClick={(e) => { grapColleges(); handleTabClick(e) }} value="colleges" >colleges</button>
         </li>
         <li className="nav-item">
           <button className={isVisible.hospitals ? "nav-link active" : "nav-link"} onClick={(e) => { handleTabClick(e) }} value="hospitals" >hospitals</button>
