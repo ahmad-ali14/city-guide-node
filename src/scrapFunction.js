@@ -1,7 +1,6 @@
 const cheerio = require('cheerio');
 const axios = require('axios');
 
-var result = [];
 
 
 const fetchData = async (url) => {
@@ -12,6 +11,8 @@ const fetchData = async (url) => {
 
 
 const getResult = async (url) => {
+    var result = [];
+
     const $ = await fetchData(url);
 
 
