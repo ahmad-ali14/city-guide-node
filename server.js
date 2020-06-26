@@ -27,6 +27,12 @@ app.get('/hospitals', async (req, res) => {
     res.json(hospitals)
 })
 
+app.get('/doctors', async (req, res) => {
+    let doctors_url = "https://www.yell.com/ucs/UcsSearchAction.do?keywords=doctors+%28medical+practitioners%29&location=Harrow&scrambleSeed=386313073"
+    var doctors = await scrap(doctors_url);
+    res.json(doctors)
+})
+
 
 
 const Port = 5000;
