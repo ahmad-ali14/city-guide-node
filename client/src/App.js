@@ -34,6 +34,22 @@ function App() {
     }).then(() => setLoading(false))
   }
 
+  const grapHospitals = async () => {
+    await setLoading(true);
+    axios.get('http://localhost:5000/hospitals').then((res) => {
+      setData(res.data)
+    }).then(() => setLoading(false))
+  }
+
+  const grapDoctors = async () => {
+    await setLoading(true);
+    axios.get('http://localhost:5000/doctors').then((res) => {
+      setData(res.data)
+    }).then(() => setLoading(false))
+  }
+
+
+
 
   const handleTabClick = (e) => {
     let updateTab = e.target.value;
@@ -110,10 +126,10 @@ function App() {
           <button className={isVisible.colleges ? "nav-link active" : "nav-link"} onClick={(e) => { grapColleges(); handleTabClick(e) }} value="colleges" > schools & colleges</button>
         </li>
         <li className="nav-item">
-          <button className={isVisible.hospitals ? "nav-link active" : "nav-link"} onClick={(e) => { handleTabClick(e) }} value="hospitals" >hospitals</button>
+          <button className={isVisible.hospitals ? "nav-link active" : "nav-link"} onClick={(e) => { grapHospitals(); handleTabClick(e) }} value="hospitals" >hospitals</button>
         </li>
         <li className="nav-item">
-          <button className={isVisible.Gps ? "nav-link active" : "nav-link"} onClick={(e) => { handleTabClick(e) }} value="Gps" >Gps</button>
+          <button className={isVisible.Gps ? "nav-link active" : "nav-link"} onClick={(e) => { grapDoctors(); handleTabClick(e) }} value="Gps" >doctors</button>
         </li>
       </ul>
 
@@ -143,7 +159,7 @@ function App() {
                     <td>{place.name ? place.name : 'N/A'}</td>
                     <td>{place.phone ? place.phone : 'N/A'}</td>
                     <td>{place.address ? place.address : 'N/A'}</td>
-                    <td>{place.website ? <a href={place.website} target="_blank" >{place.name} link </a> : 'N/A'}</td>
+                    <td>{place.website ? <a href={place.website} target="_blank" >{place.name}</a> : 'N/A'}</td>
                   </tr>
                 );
               })}
