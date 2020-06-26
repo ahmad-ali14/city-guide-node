@@ -19,6 +19,16 @@ app.get('/colleges', async (req, res) => {
     var colleges = await scrap(colleges_url);
     res.json(colleges)
 })
+
+
+app.get('/hospitals', async (req, res) => {
+    let hospitals_url = "https://www.yell.com/ucs/UcsSearchAction.do?keywords=hospitals&location=Harrow&scrambleSeed=1305200660"
+    var hospitals = await scrap(hospitals_url);
+    res.json(hospitals)
+})
+
+
+
 const Port = 5000;
 
 app.listen(Port, () => {
